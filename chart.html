@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+    <head>
+        <title>SOAP Javascript Test</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function soap() {
+                var xmlhttp = new XMLHttpRequest();
+                
+                //replace second argument with the path to your Secret Server webservices
+                xmlhttp.open('POST', 'https://www.poems.co.id/primaservice/prima/prima.asmx', true);
+                
+                //create the SOAP request
+                //replace username, password (and org + domain, if necessary) with the appropriate info
+                var strRequest =
+                            '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+                                    '<soap:Header>' +
+                                        '<clsSoapHeader xmlns="http://www.phillip.co.id/">' +
+                                            '<UserID>PoemsUser</UserID>' +
+                                            '<SessionID>PoemsPwd</SessionID>' +
+                                        '</clsSoapHeader>' +
+                                    '</soap:Header>' +
+                                    '<soap:Body>' +
+                                        '<GetClientLoginDemo xmlns="http://www.phillip.co.id/">' +
+                                        '<_sAcctNo>DEMOPRI</_sAcctNo>' +
+                                        '<_sDevice>3</_sDevice>' +
+                                        '<_sImei>355757360211150</_sImei>' +
+                                        '<_sPin>311081</_sPin>' +
+                                        '<_sProduct>samsung;DeviceName=SM-G950L;SoftwareVersion=2.1.16;PlatformVersion=5.1.1;ConnectionUsed=WIFI</_sProduct>' +
+                                        '<_sPwd>134679</_sPwd>' +
+                                        '<_sServerID>18</_sServerID>' +
+                                        '<_sVer>2.1.16</_sVer>' +
+                                        '</GetClientLoginDemo>' +
+                                    '</soap:Body>' +
+                                '</soap:Envelope>';	
+
+                //specify request headers
+                xmlhttp.setRequestHeader('Content-Type', 'text/xml; charset=utf-8');
+                xmlhttp.setRequestHeader('SOAPAction', '"http://www.phillip.co.id/GetClientLoginDemo"');
+
+                //FOR TESTING: display results in an alert box once the response is received
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        alert(xmlhttp.responseText);
+                        var xmlDoc=xmlhttp.responseXML;
+                        //console.log(xmlDoc);
+                        //alert(xmlDoc);
+                        //var objList = xmlDoc.getElementsByTagName("GetClientLoginDemoResult");
+                        //console.log(objList);
+                        // var attrList = objList[0].getElementsByTagName("Session"); 
+                        // console.log(attrList);
+
+                        // parser = new DOMParser();
+                        // xmlDoc = parser.parseFromString(xmlhttp.responseText,"text/xml");
+                        // alert(xmlDoc);
+                    }
+                };
+
+                //send the SOAP request
+                xmlhttp.send(strRequest);
+            };
+            
+            //build & send the request when the page loads
+            window.onload = function() {
+                soap();
+            };
+
+        </script>
+    </body>
+</html
